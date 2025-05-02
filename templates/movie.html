@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+    <style>
+        th {
+             white-space: nowrap;
+        }
+    </style>
+  <head>
+    <!-- Site Title-->
+    <title>Home</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="static/images/favicon.png" type="image/x-icon">
+    <!-- Stylesheets-->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Sans:300,400,500,700%7CRaleway:700">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/fonts.css">
+    <link rel="stylesheet" href="static/css/style.css">
+
+  </head>
+  <body>
+    <!-- Page Loader-->
+    <div id="page-loader">
+      <div class="page-loader-logo">
+        <div class="brand">
+          <div class="brand__name"><img src="static/images/logo-135x47.png" alt="" width="135" height="47"/>
+          </div>
+        </div>
+      </div>
+      <div class="page-loader-body">
+        <div id="loadingProgressG">
+          <div class="loadingProgressG" id="loadingProgressG_1"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Page-->
+    <div class="page">
+      <!-- Page Header-->
+      <header class="page-header section">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-fullwidth" data-xxl-layout="rd-navbar-fullwidth" data-sm-device-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-device-layout="rd-navbar-fullwidth" data-xxl-device-layout="rd-navbar-fullwidth" data-stick-up-clone="false" data-md-stick-up-offset="150px" data-lg-stick-up-offset="60px" data-md-stick-up="true" data-lg-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand"><a class="brand" href="/">
+                      <div class="brand__name"><img src="static/images/logo-135x47.png" alt="" width="135" height="47"/>
+                      </div></a></div>
+                </div>
+                <!-- RD Navbar Nav-->
+                <div class="rd-navbar-nav-wrap">
+                  <div class="rd-navbar-main-item"><a class="button button-xs button-primary" href="/">Get a quote</a></div>
+                  <!-- RD Navbar Nav-->
+                  <ul class="rd-navbar-nav">
+                    <li><a href="/index">Home</a></li>
+                    <li><a href="/movie">Movie</a></li>
+                    <li><a href="/score">Score</a></li>
+                    <li><a href="/word">Word Cloud</a></li>
+                    <li><a href="/teams">Teams</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <!-- home section-->
+      <section class="section section-md bg-default" data-type="anchor">
+        <div class="bg-gray-4">
+          <div class="container-fluid container-condensed">
+            <div class="row row-30 flex-lg-row-reverse">
+                <div style="text-align: center;">
+                    <h2>
+                        <span>Analysis of Douban TOP250 data</span>
+                    </h2>
+                    <p>Implemented using Python crawlers, Flask framework, Echarts, WordCloud, etc.</p>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Counters-->
+        <div style="background-color: #f0f0f0; padding: 20px; display: flex; flex-direction: column; align-items: center;">
+          <table class="table table-striped" style="width: 80%; text-align: center; background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <tr>
+              <th>rankings</th>
+              <th>Movie Chinese Name</th>
+              <th>Movie English Name</th>
+              <th>Score</th>
+              <th>Number of evaluations</th>
+              <th>general situation</th>
+              <th>Other information</th>
+            </tr>
+
+            {% for movie in movies %}
+              <tr>
+                <td>{{ movie[0] }}</td>
+                <td>
+                  <a href="{{ movie[1] }}" target="_blank">
+                    {{ movie[3] }}
+                  </a>
+                </td>
+                <td>{{ movie[4] }}</td>
+                <td>{{ movie[5] }}</td>
+                <td>{{ movie[6] }}</td>
+                <td>{{ movie[7] }}</td>
+                <td>{{ movie[8] }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+
+          <!-- 分页导航 -->
+          <nav aria-label="Page navigation" style="margin-top: 20px;">
+            <ul class="pagination">
+              <!-- 上一页按钮 -->
+              <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ page - 1 }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+
+              <!-- 页码按钮 -->
+              {% for p in range(1, total_pages + 1) %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                  <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                </li>
+              {% endfor %}
+
+              <!-- 下一页按钮 -->
+              <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ page + 1 }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+
+      <br><br><br>
+
+      <footer>
+          <div class="footer-corporate__aside bg-black text-center">
+          <div class="container container-fluid container-condensed">
+            <div class="row row-20 row_xl-ten footer-corporate__range">
+              <div class="col-md-8 col-xxl-6 footer-corporate__aside-column text-md-start">
+                <!-- Rights-->
+                <p class="rights"><span>Aqua</span><span>&nbsp;&copy;&nbsp;</span><span class="copyright-year"></span>.&nbsp;<br class="d-sm-none"><a class="link-underline" href="/">Privacy Policy</a> <a target="_blank" href="https://www.mobanwang.com/" title="网站模板" class="link-underline">网站模板</a></p>
+              </div>
+              <div class="col-md-4 col-xxl-4 footer-corporate__aside-column text-md-end">
+                <ul class="list-inline-xxs">
+                  <li><a class="icon icon-xs icon-style-modern fa fa-twitter" href="/"></a></li>
+                  <li><a class="icon icon-xs icon-style-modern fa fa-facebook" href="/"></a></li>
+                  <li><a class="icon icon-xs icon-style-modern fa fa-instagram" href="/"></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- Global Mailform Output-->
+    <div class="snackbars" id="form-output-global"></div>
+    <!-- Javascript-->
+    <script src="static/js/core.min.js"></script>
+    <script src="static/js/script.js"></script>
+    <!-- coded by himic-->
+  </body>
+</html>
